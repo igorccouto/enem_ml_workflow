@@ -1,6 +1,7 @@
 ![GitHub](https://img.shields.io/github/license/igorccouto/enem_ml_workflow)
+![](https://img.shields.io/badge/OS-Linux-blue)
 
-# ENEM
+# ENEM - Machine Learning Workflow
 
 Complete Machine Learning Workflow to predict the ENEM (National High School Exam in Portuguese) essay score based on social-economic questions.
 
