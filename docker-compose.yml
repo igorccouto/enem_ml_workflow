@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+    airflow-db:
+        container_name: airflow-db
+        image: postgres
+        environment:
+            - POSTGRES_USER=airflow
+            - POSTGRES_PASSWORD=airflow
+            - POSTGRES_DB=airflow
+    airflow-scheduler:
+        container_name: airflow-scheduler
+        image: apache/airflow
+        command: scheduler
+        depends_on:
+            - airflow-db
+        volumes:
+            - ./dags:/opt/airflow/dags
+            - ./docker/logs:/opt/airflow/logs
+        env_file:
+            - docker/airflow.env
+    airflow-webserver:
+        container_name: airflow-webserver
+        image: apache/airflow
+        entrypoint: ./scripts/entrypoint.sh
+        depends_on:
+            - airflow-db
+            - airflow-scheduler
+        env_file:
+            - ./docker/airflow.env
+        volumes:
+            - ./dags:/opt/airflow/dags
+            - ./docker/logs:/opt/airflow/logs
+            - ./docker/scripts:/opt/airflow/scripts
+        ports:
+            - '8080:8080'
