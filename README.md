@@ -3,13 +3,26 @@
 
 # ENEM - Machine Learning Workflow
 
-Complete Machine Learning Workflow to predict the ENEM (National High School Exam in Portuguese) essay score based on social-economic questions.
+An orchestrated Machine Learning Workflow (Pipeline) to manage data from ENEM (National High School Exam in Portuguese). Data Analysts/Scientists can download the application to analyze data and/or create models to predict scores from students in ENEM exams.
 
-The entire workflow was designed here. From download script to deploy process. Data Scientists can attach your model to make better predictions.
+The entire workflow was designed here. From download data to deploy process. All workflow (Bash and Python scripts) is orchestrated by Apache Airflow. All resources are dockerized to be easily installed. 
 
-## Workflow steps
+Install, download data from a chosen year, analyzes and creates a model for your own purposes.
 
-Each step is made by a specific Bash/Python script. For instance, if you want to execute manually each step to ENEM 2018:
+## 1. Installation
+
+By Makefile, you can manage the application:
+- *make up* - Builds and starts the application.
+    - After, you can access the main page of the pipeline at [http://localhost:8080/](http://localhost:8080)
+    - You can use detachable mode with *make up_d*.
+    - If you have problems with permissions in docker folders, runs with superuser privileges, like *sudo make up*.
+- *make stop* - Stops the containers.
+- *make down* - Removes the containers.
+- *make restart* - Restarts.
+
+## 2. Workflow steps
+
+Each step is made by a specific Bash/Python script. In general, Apache Airflow controls and manage all these steps. However, you can run it manually. For instance, if you want to execute manually each step to manipulate data from ENEM 2018:
 
 1. Download
 ```console
@@ -27,9 +40,7 @@ $ python process_data.py 2018
 5. Test
 6. Deploy
 
-The whole process is orchestrated by a dockerized Apache Airflow instance.
-
-## Project Organization
+## 3. Project Organization
 
     ├── LICENSE
     ├── Makefile           <- Makefile with commands like `make data` or `make train`
@@ -39,6 +50,8 @@ The whole process is orchestrated by a dockerized Apache Airflow instance.
     │   ├── interim        <- Intermediate data that has been transformed.
     │   ├── processed      <- The final, canonical data sets for modeling.
     │   └── raw            <- The original, immutable data dump.
+    ├── docker             <- Files and sources for dockerized application.
+    ├── docker-compose.yml <- Defines a multi-container Docker application.
     ├── models             <- Trained and serialized models, model predictions, or model summaries
     ├── notebooks          <- Jupyter notebooks.
     ├── requirements.txt   <- The requirements file .
